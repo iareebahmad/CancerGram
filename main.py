@@ -14,9 +14,9 @@ SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJ
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-########################
+#######################
 # Session State
-########################
+#######################
 if "user" not in st.session_state:
     st.session_state.user = None
 
