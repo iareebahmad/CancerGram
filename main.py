@@ -38,7 +38,7 @@ def show_login():
             if auth_response.user:
                 st.session_state.user = auth_response.user
                 st.success("Login successful!")
-                st.experimental_rerun()
+                st.rerun()
             else:
                 st.error("Invalid login credentials")
         except Exception as e:
@@ -78,7 +78,7 @@ def main_app():
     st.text("CancerGram")
     if st.button("Logout"):
         st.session_state.user = None
-        st.experimental_rerun()
+        st.rerun()
 
 
 ########################
