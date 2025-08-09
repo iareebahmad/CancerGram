@@ -76,6 +76,11 @@ def show_register():
 ########################
 def main_app():
     st.text("CancerGram")
+
+    #Sidebar post login
+    with st.sidebar:
+        st.text("CancerGram")
+
     if st.button("Logout"):
         st.session_state.user = None
         st.rerun()
