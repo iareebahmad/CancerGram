@@ -31,18 +31,33 @@ def show_login():
 
     if st.button("Login"):
         try:
+            # Sign in using Supabase Auth
             auth_response = supabase.auth.sign_in_with_password({
                 "email": email,
                 "password": password
             })
+
             if auth_response.user:
+                user_id = auth_response.user.id
+
+                # Update last_login timestamp in profiles table
+                try:
+                    supabase.table("profiles").update({
+                        "last_login": "now()"
+                    }).eq("id", user_id).execute()
+                except Exception as update_err:
+                    st.warning(f"Logged in but could not update last_login: {update_err}")
+
+                # Store user in session
                 st.session_state.user = auth_response.user
                 st.success("Login successful!")
                 st.rerun()
             else:
                 st.error("Invalid login credentials")
+
         except Exception as e:
             st.error(f"Error: {e}")
+
 
 
 ########################
@@ -58,17 +73,33 @@ def show_register():
         if password != confirm_password:
             st.error("Passwords do not match!")
             return
+
         try:
+            # Sign up with Supabase Auth
             auth_response = supabase.auth.sign_up({
                 "email": email,
                 "password": password
             })
+
             if auth_response.user:
-                st.success("Account created! Please verify your account. To verify, click on the link sent to you on your registered email id.")
+                user_id = auth_response.user.id
+
+                # Insert into profiles table
+                try:
+                    supabase.table("profiles").insert({
+                        "id": user_id,
+                        "email": email
+                    }).execute()
+                except Exception as insert_err:
+                    st.warning(f"User registered but could not insert into profiles: {insert_err}")
+
+                st.success("Account created! Please verify your account using the link sent to your email.")
             else:
                 st.error("Could not register. Try again.")
+
         except Exception as e:
             st.error(f"Error: {e}")
+
 
 
 ########################
