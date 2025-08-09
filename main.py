@@ -64,7 +64,7 @@ def show_register():
                 "password": password
             })
             if auth_response.user:
-                st.success("Account created! Please login from the Login tab.")
+                st.success("Account created! Please verify your account. To verify, click on the link sent to you on your registered email id.")
             else:
                 st.error("Could not register. Try again.")
         except Exception as e:
