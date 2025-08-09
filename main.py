@@ -1,24 +1,24 @@
 import streamlit as st
 from supabase import create_client, Client
 
-# ------------------------------
+########################
 # Supabase configuration
-# ------------------------------
+########################
 SUPABASE_URL = "https://onybgfedxcquhuypmmds.supabase.co"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ueWJnZmVkeGNxdWh1eXBtbWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ3MzI4MTIsImV4cCI6MjA3MDMwODgxMn0.NQ1e34MOXr2Oh-L7Btm21lIHC3lueASGIyg6_PCsro0"
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-# ------------------------------
+########################
 # Session State
-# ------------------------------
+########################
 if "user" not in st.session_state:
     st.session_state.user = None
 
 
-# ------------------------------
+########################
 # Login Function
-# ------------------------------
+########################
 def show_login():
     st.subheader("Already a User? Log in Here")
     email = st.text_input("Email", key="login_email")
@@ -40,9 +40,9 @@ def show_login():
             st.error(f"Error: {e}")
 
 
-# ------------------------------
+########################
 # Register Function
-# ------------------------------
+########################
 def show_register():
     st.subheader("New User? Register Here")
     email = st.text_input("Email", key="reg_email")
@@ -66,9 +66,9 @@ def show_register():
             st.error(f"Error: {e}")
 
 
-# ------------------------------
+########################
 # Main App
-# ------------------------------
+########################
 def main_app():
     st.text("CancerGram")
     if st.button("Logout"):
@@ -76,9 +76,9 @@ def main_app():
         st.experimental_rerun()
 
 
-# ------------------------------
+########################
 # App Flow
-# ------------------------------
+########################
 st.title("CancerGram")
 
 if st.session_state.user:
@@ -91,9 +91,9 @@ else:
         show_register()
 
 
-# ------------------------------
+########################
 # Footer
-# ------------------------------
+########################
 
 st.markdown("---")
 st.markdown(
