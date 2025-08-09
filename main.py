@@ -1,0 +1,102 @@
+import streamlit as st
+from supabase import create_client, Client
+
+# ------------------------------
+# Supabase configuration
+# ------------------------------
+SUPABASE_URL = "https://onybgfedxcquhuypmmds.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ueWJnZmVkeGNxdWh1eXBtbWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ3MzI4MTIsImV4cCI6MjA3MDMwODgxMn0.NQ1e34MOXr2Oh-L7Btm21lIHC3lueASGIyg6_PCsro0"
+
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+# ------------------------------
+# Session State
+# ------------------------------
+if "user" not in st.session_state:
+    st.session_state.user = None
+
+
+# ------------------------------
+# Login Function
+# ------------------------------
+def show_login():
+    st.subheader("Already a User? Log in Here")
+    email = st.text_input("Email", key="login_email")
+    password = st.text_input("Password", type="password", key="login_pwd")
+
+    if st.button("Login"):
+        try:
+            auth_response = supabase.auth.sign_in_with_password({
+                "email": email,
+                "password": password
+            })
+            if auth_response.user:
+                st.session_state.user = auth_response.user
+                st.success("Login successful!")
+                st.experimental_rerun()
+            else:
+                st.error("Invalid login credentials")
+        except Exception as e:
+            st.error(f"Error: {e}")
+
+
+# ------------------------------
+# Register Function
+# ------------------------------
+def show_register():
+    st.subheader("New User? Register Here")
+    email = st.text_input("Email", key="reg_email")
+    password = st.text_input("Password", type="password", key="reg_pwd")
+    confirm_password = st.text_input("Confirm Password", type="password", key="reg_confirm")
+
+    if st.button("Register"):
+        if password != confirm_password:
+            st.error("Passwords do not match!")
+            return
+        try:
+            auth_response = supabase.auth.sign_up({
+                "email": email,
+                "password": password
+            })
+            if auth_response.user:
+                st.success("Account created! Please login from the Login tab.")
+            else:
+                st.error("Could not register. Try again.")
+        except Exception as e:
+            st.error(f"Error: {e}")
+
+
+# ------------------------------
+# Main App
+# ------------------------------
+def main_app():
+    st.text("CancerGram")
+    if st.button("Logout"):
+        st.session_state.user = None
+        st.experimental_rerun()
+
+
+# ------------------------------
+# App Flow
+# ------------------------------
+st.title("CancerGram")
+
+if st.session_state.user:
+    main_app()
+else:
+    login_tab_obj, register_tab_obj = st.tabs(["Login", "Register"])
+    with login_tab_obj:
+        show_login()
+    with register_tab_obj:
+        show_register()
+
+
+# ------------------------------
+# Footer
+# ------------------------------
+
+st.markdown("---")
+st.markdown(
+        '<p style="text-align:center;">Made by Dr. Shifa Shah</p>',
+        unsafe_allow_html=True
+    )
