@@ -2,6 +2,11 @@ import streamlit as st
 from supabase import create_client, Client
 
 ########################
+# Page configuration
+########################
+st.set_page_config(page_title="CancerGram by Dr. Shifa Shah",layout="centered")
+
+########################
 # Supabase configuration
 ########################
 SUPABASE_URL = "https://onybgfedxcquhuypmmds.supabase.co"
