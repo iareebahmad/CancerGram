@@ -111,7 +111,7 @@ def main_app():
     #Sidebar post login
     with st.sidebar:
         st.text("CancerGram")
-
+    # Logout Button
     if st.button("Logout"):
         st.session_state.user = None
         st.rerun()
