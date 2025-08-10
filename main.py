@@ -106,11 +106,9 @@ def show_register():
 # Main App
 ########################
 def main_app():
-    st.text("CancerGram")
-
-    #Sidebar post login
     st.markdown("### CancerGram")
     st.text("Advanced Cancer Detection using cutting edge AI for better accuracy")
+    # Sidebar post login
     with st.sidebar:
         st.text("CancerGram")
 
