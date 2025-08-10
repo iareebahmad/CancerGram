@@ -110,7 +110,7 @@ def main_app():
 
     #Sidebar post login
     st.markdown("### CancerGram")
-    st.text("Advanced Cancer Detection using cutting edge AI")
+    st.text("Advanced Cancer Detection using cutting edge AI for better accuracy")
     with st.sidebar:
         st.text("CancerGram")
 
