@@ -108,6 +108,7 @@ def show_register():
 def main_app():
     st.markdown("### CancerGram")
     st.text("Advanced Cancer Detection using cutting edge AI for better accuracy")
+    st.info("Will work on this : Input fields for data and Output screen")
     # Sidebar post login
     with st.sidebar:
         st.text("CancerGram")
