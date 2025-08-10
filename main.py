@@ -109,8 +109,11 @@ def main_app():
     st.text("CancerGram")
 
     #Sidebar post login
+    st.markdown("### CancerGram")
+    st.text("Advanced Cancer Detection using cutting edge AI")
     with st.sidebar:
         st.text("CancerGram")
+
     # Logout Button
     if st.button("Logout"):
         st.session_state.user = None
