@@ -84,7 +84,7 @@ def show_register():
             if auth_response.user:
                 user_id = auth_response.user.id
 
-                # Insert into profiles table
+                # Insert into profiles table in Supabase
                 try:
                     supabase.table("profiles").insert({
                         "id": user_id,
