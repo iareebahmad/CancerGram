@@ -101,22 +101,60 @@ def show_register():
             st.error(f"Error: {e}")
 
 
-
 ########################
 # Main App
 ########################
 def main_app():
-    st.markdown("### CancerGram")
     st.text("Advanced Cancer Detection using cutting edge AI for better accuracy")
-    st.info("Will work on this : Input fields for data and Output screen")
+
+    st.subheader("Upload Your Data for Analysis")
+
+    # Genomic Expression CSV
+    genomic_csv = st.file_uploader(
+        "Upload Genomic Expression Data (CSV)",
+        type=["csv"],
+        key="genomic_csv"
+    )
+
+    # Clinical Data CSV
+    clinical_csv = st.file_uploader(
+        "Upload Clinical Data (CSV)",
+        type=["csv"],
+        key="clinical_csv"
+    )
+
+    # Image Data
+    image_file = st.file_uploader(
+        "Upload Image Data & Scans (JPG/JPEG/PNG)",
+        type=["jpg", "jpeg", "png"],
+        key="image_data"
+    )
+
+    # Optional: Display confirmation
+    if st.button("Submit Data"):
+        if not genomic_csv or not clinical_csv or not image_file:
+            st.error("Please upload all required files before submitting.")
+        else:
+            st.success("Files uploaded successfully! Processing will start shortly.")
+            # Processing logic can be added here
+
     # Sidebar post login
     with st.sidebar:
-        st.text("CancerGram")
-
-    # Logout Button
-    if st.button("Logout"):
-        st.session_state.user = None
-        st.rerun()
+        st.subheader("CancerGram")
+        if st.session_state.user:
+            st.markdown(
+                f"""
+                <p style="color:#B57EDC; 
+                          font-family: 'Trebuchet MS', sans-serif; 
+                          font-size: 16px;">
+                    Logged in as: {st.session_state.user.email}
+                </p>
+                """,
+                unsafe_allow_html=True
+            )
+            if st.button("Logout"):
+                st.session_state.user = None
+                st.rerun()
 
 
 ########################
@@ -127,12 +165,15 @@ st.title("CancerGram")
 if st.session_state.user:
     main_app()
 else:
+    with st.sidebar:
+        st.subheader("CancerGram")
+        st.info("Please log in or register to continue.")
+
     login_tab_obj, register_tab_obj = st.tabs(["Login", "Register"])
     with login_tab_obj:
         show_login()
     with register_tab_obj:
         show_register()
-
 
 ########################
 # Footer
