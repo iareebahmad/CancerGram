@@ -105,7 +105,7 @@ def show_register():
 # Main App
 ########################
 def main_app():
-    st.text("Advanced Cancer Detection using cutting edge AI for better accuracy")
+    st.text("Advanced Cancer Detection using Cutting Edge AI for Better Accuracy")
 
     st.subheader("Upload Your Data for Analysis")
 
